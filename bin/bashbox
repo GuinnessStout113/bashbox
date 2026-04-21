@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+COMMAND="${1:-}"
+ARG1="${2:-}"
+
+print_help() {
+  cat <<'EOF'
+bashbox — terminal-based multiplayer party games
+
+Usage:
+  bashbox host
+  bashbox join <host>
+  bashbox help
+
+Commands:
+  host        Start a game host
+  join        Join an existing game
+  help        Show this help message
+EOF
+}
+
+case "$COMMAND" in
+  host)
+    echo "[bashbox] Host mode starting (not implemented yet)"
+    ;;
+  join)
+    if [[ -z "$ARG1" ]]; then
+      echo "Error: join requires a host address"
+      echo "Example: bashbox join localhost"
+      exit 1
+    fi
+    echo "[bashbox] Joining host at $ARG1 (not implemented yet)"
+    ;;
+  help|"")
+    print_help
+    ;;
+  *)
+    echo "Unknown command: $COMMAND"
+    echo
+    print_help
+    exit 1
+    ;;
+esac
