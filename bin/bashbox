@@ -2,6 +2,11 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LIB_DIR="$SCRIPT_DIR/../lib"
+``
+
+
 COMMAND="${1:-}"
 ARG1="${2:-}"
 
@@ -23,7 +28,8 @@ EOF
 
 case "$COMMAND" in
   host)
-    echo "[bashbox] Host mode starting (not implemented yet)"
+    source "$LIB_DIR/host.sh"
+    run_host
     ;;
   join)
     if [[ -z "$ARG1" ]]; then
