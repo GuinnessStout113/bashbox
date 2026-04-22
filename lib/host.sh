@@ -11,22 +11,26 @@ SHUFFLED_ANSWERS=()
 VOTES=()
 SCORES=()
 ``
-
+CSI="\033"
+PURPLE="35m"
+RESET="0m"
+GREEN="32m"
+CYAN="36m"
 run_host() {
   clear
 
-  echo -e "\033[1;35m====================================\033[0m"
-  echo -e "\033[1;35m        🎉  B A S H B O X  🎉        \033[0m"
-  echo -e "\033[1;35m====================================\033[0m"
+  echo -e "${CSI}[1;${PURPLE}====================================${CSI}[${RESET}"
+  echo -e "${CSI}[1;${PURPLE}        🎉  B A S H B O X  🎉        ${CSI}[${RESET}"
+  echo -e "${CSI}[1;${PURPLE}====================================${CSI}[${RESET}"
   echo
-  echo -e "\033[1;32mHost mode started.\033[0m"
-  echo -e "Game: \033[1mQuiplash (prototype)\033[0m"
+  echo -e "${CSI}[1;${GREEN}Host mode started.${CSI}[${RESET}"
+  echo -e "Game: ${CSI}[1mQuiplash (prototype)${CSI}[${RESET}"
   echo
-  echo -e "\033[1;33mPrompt:\033[0m \033[1m$PROMPT\033[0m"
+  echo -e "${CSI}[1;33mPrompt:${CSI}[${RESET} ${CSI}[1m$PROMPT${CSI}[${RESET}"
   echo
-  echo -e "\033[36mSubmit your answer using:\033[0m"
-  echo -e "  \033[1msubmit \"your answer\"\033[0m"
-  echo -e "\033[2m(Press Ctrl+C to stop the server)\033[0m"
+  echo -e "${CSI}[${GREEN}Submit your answer using:${CSI}[${RESET}"
+  echo -e "  ${CSI}[1msubmit \"your answer\"${CSI}[${RESET}"
+  echo -e "${CSI}[2m(Press Ctrl+C to stop the server)${CSI}[${RESET}"
   echo
 
   # Placeholder host loop
@@ -78,8 +82,8 @@ handle_submit() {
 
   ANSWERS+=("$answer")
 
-  echo -e "\033[32mAnswer received ✅\033[0m"
-  echo -e "\033[2m(${#ANSWERS[@]} answer stored)\033[0m"
+  echo -e "${CSI}[${GREEN}Answer received ✅${CSI}[${RESET}"
+  echo -e "${CSI}[2m(${#ANSWERS[@]} answer stored)${CSI}[${RESET}"
   if [[ ${#ANSWERS[@]} -ge 2 ]]; then  
     start_voting
   fi
@@ -104,7 +108,7 @@ handle_vote() {
   fi
 
   VOTES+=("$choice")
-  echo -e "\033[32mVote recorded ✅\033[0m"
+  echo -e "${CSI}[${GREEN}Vote recorded ✅${CSI}[${RESET}"
 
   # End round after 1 vote (for now)
   score_round
@@ -131,16 +135,16 @@ start_voting() {
   shuffle_array
 
   echo
-  echo -e "\033[1;33mAnswers:\033[0m"
+  echo -e "${CSI}[1;33mAnswers:${CSI}[${RESET}"
 
   local i=1
   for ans in "${SHUFFLED_ANSWERS[@]}"; do
-    echo -e "  \033[1m$i)\033[0m $ans"
+    echo -e "  ${CSI}[1m$i)${CSI}[${RESET} $ans"
     ((i++))
   done
 
   echo
-  echo -e "\033[36mVote using:\033[0m \033[1mvote <number>\033[0m"
+  echo -e "${CSI}[${GREEN}Vote using:${CSI}[${RESET} ${CSI}[1mvote <number>${CSI}[${RESET}"
   echo
 }
 
@@ -148,7 +152,7 @@ score_round() {
   PHASE="SCORING"
 
   echo
-  echo -e "\033[1;35mScoring Round...\033[0m"
+  echo -e "${CSI}[1;${PURPLE}Scoring Round...${CSI}[${RESET}"
   sleep 1
 
   TALLY=()
@@ -165,18 +169,18 @@ done
 
 
   echo
-  echo -e "\033[1;33mResults:\033[0m"
+  echo -e "${CSI}[1;33mResults:${CSI}[${RESET}"
 
   local i=1
   for ans in "${SHUFFLED_ANSWERS[@]}"; do
     votes="${TALLY[$((i-1))]}"
-    echo -e "  \033[1m$i)\033[0m $ans — \033[32m${votes} vote(s)\033[0m"
+    echo -e "  ${CSI}[1m$i)${CSI}[${RESET} $ans — ${CSI}[${GREEN}${votes} vote(s)${CSI}[${RESET}"
     ((i++))
   done
 
   echo
-  echo -e "\033[1;32mRound complete!\033[0m"
-  echo -e "\033[2m(ctrl+c to quit — reset coming next)\033[0m"
+  echo -e "${CSI}[1;${GREEN}Round complete!${CSI}[${RESET}"
+  echo -e "${CSI}[2m(ctrl+c to quit — reset coming next)${CSI}[${RESET}"
 }
 
 ``
